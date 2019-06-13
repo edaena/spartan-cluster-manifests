@@ -1,0 +1,1 @@
+# spartan-cluster-manifests
