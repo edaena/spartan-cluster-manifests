@@ -1,0 +1,51 @@
+---
+# Source: spartan-app/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: spartan-app
+  labels:
+    app: spartan-app
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 8080
+    name: http
+  selector:
+    app: spartan-app
+
+---
+# Source: spartan-app/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spartan-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: spartan-app
+      app.kubernetes.io/instance: spartan-service
+  minReadySeconds: 5
+  strategy:
+    type: RollingUpdate # describe how we do rolling updates
+    rollingUpdate:
+      maxUnavailable: 1 # When updating take one pod down at a time
+      maxSurge: 1 # When updating never have more than one extra pod. If replicas = 2 then never 3 pods when updating
+  template:
+    metadata:
+      labels:
+        app: spartan-app
+        app.kubernetes.io/name: spartan-app
+        app.kubernetes.io/instance: spartan-service
+      annotations:
+        prometheus.io/port: "8080"
+        prometheus.io/scrape: "true" 
+    spec:
+      containers:
+        - name: spartan-app
+          image: "andrebriggs.azurecr.io/andrebriggs/spartan-app:20190427.3"
+          imagePullPolicy: IfNotPresent
+          ports:
+          - containerPort: 8080
+---
