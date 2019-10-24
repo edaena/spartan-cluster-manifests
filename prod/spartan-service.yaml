@@ -1,4 +1,5 @@
 ---
+---
 # Source: spartan-app/templates/service.yaml
 apiVersion: v1
 kind: Service
@@ -15,6 +16,7 @@ spec:
     app: spartan-app
 
 ---
+
 # Source: spartan-app/templates/deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -44,8 +46,7 @@ spec:
     spec:
       containers:
         - name: spartan-app
-          image: "andrebriggs.azurecr.io/andrebriggs/spartan-app:20190427.3"
+          image: "andrebriggs.azurecr.io/andrebriggs/spartan-app:6853"
           imagePullPolicy: IfNotPresent
           ports:
           - containerPort: 8080
----
