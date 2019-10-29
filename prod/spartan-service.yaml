@@ -46,7 +46,7 @@ spec:
     spec:
       containers:
         - name: spartan-app
-          image: "andrebriggs.azurecr.io/andrebriggs/spartan-app:7016"
+          image: "andrebriggs.azurecr.io/andrebriggs/spartan-app:7094"
           imagePullPolicy: IfNotPresent
           ports:
           - containerPort: 8080
